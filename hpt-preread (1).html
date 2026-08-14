@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High-Performing Teams — Pre-Read for Zalopay Tech Leaders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --c1:#FF6E32;   /* Clarify Context - matches the bubble/callout orange used for it in the source chart */
+    --c1-soft:#FFE9DD;
+    --c2:#00CF6A;   /* Define Your Why - exact wheel green */
+    --c2-soft:#DFF9EB;
+    --c3:#00B3D8;   /* Set Clear Roles - exact wheel cyan */
+    --c3-soft:#DEF6FB;
+    --c4:#90E0EF;   /* Cultivate Collaboration - exact wheel light cyan */
+    --c4-soft:#E9FAFD;
+    --c5:#0070C0;   /* Align Ways of Working - exact wheel blue */
+    --c5-soft:#E3EFFB;
+    --c6:#0033C9;   /* Review Reflect Recommit - exact wheel navy */
+    --c6-soft:#E5E9F9;
+    --coral:#FF6B45;
+    --coral-soft:#FFEDE7;
+    --bg:#F5F7FB;
+    --surface:#FFFFFF;
+    --ink:#0F2340;
+    --ink-soft:#5A6B85;
+    --ink-faint:#93A1B8;
+    --border:#E3E8F0;
+    --good:#1F9D63;
+    --bad:#E0453C;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 1px 2px rgba(15,35,64,0.04), 0 8px 24px rgba(15,35,64,0.06);
+    --sidebar-w:272px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Sora',system-ui,sans-serif;margin:0 0 .5em;letter-spacing:-0.01em;}
+  p{line-height:1.65;margin:0 0 1em;color:var(--ink-soft);}
+  strong{color:var(--ink);}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  ::selection{background:var(--c5-soft);}
+  a{color:var(--c5);}
+  button{font-family:inherit;cursor:pointer;}
+  textarea,input,select{font-family:inherit;font-size:15px;}
+  :focus-visible{outline:3px solid var(--c5);outline-offset:2px;}
+
+  /* ---------- APP SHELL ---------- */
+  .app{display:flex;min-height:100vh;}
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    position:sticky;top:0;height:100vh;
+    display:flex;flex-direction:column;
+    padding:24px 16px;
+    overflow-y:auto;
+    z-index:20;
+  }
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 20px;}
+  .brand-mark{font-family:'Sora';font-weight:800;font-size:20px;}
+  .brand-mark .z1{color:#0068FF;} .brand-mark .z2{color:#1F9D63;}
+  .brand-sub{font-size:11px;color:var(--ink-faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:-2px;}
+
+  .nav-group-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:700;margin:14px 10px 6px;}
+  .navlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+  .navlink{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 10px;border-radius:10px;
+    color:var(--ink-soft);text-decoration:none;font-size:14px;font-weight:600;
+    border:1px solid transparent;background:none;width:100%;text-align:left;
+    transition:background .15s ease, color .15s ease;
+  }
+  .navlink:hover{background:var(--bg);color:var(--ink);}
+  .navlink.active{background:var(--c5-soft);color:var(--c5);}
+  .navdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--dot,#ccc);box-shadow:0 0 0 3px rgba(0,0,0,0);}
+  .navlink.visited .navdot{box-shadow:0 0 0 3px color-mix(in srgb, var(--dot) 20%, transparent);}
+  .navlink .navnum{font-family:'IBM Plex Mono';font-size:10px;color:var(--ink-faint);width:14px;flex-shrink:0;}
+
+  .sidebar-foot{margin-top:auto;padding-top:16px;border-top:1px solid var(--border);}
+  .reset-btn{
+    width:100%;font-size:12px;font-weight:600;color:var(--ink-faint);
+    background:none;border:1px dashed var(--border);border-radius:10px;padding:8px;
+  }
+  .reset-btn:hover{color:var(--bad);border-color:var(--bad);}
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    display:none;
+    align-items:center;justify-content:space-between;
+    padding:14px 18px;background:var(--surface);border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:15;
+  }
+  .burger{background:none;border:1px solid var(--border);border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;}
+  .burger span,.burger span::before,.burger span::after{content:'';display:block;width:16px;height:2px;background:var(--ink);position:relative;}
+  .burger span::before{position:absolute;top:-5px;}
+  .burger span::after{position:absolute;top:5px;}
+
+  .content{flex:1;padding:44px 56px 100px;max-width:900px;width:100%;margin:0 auto;}
+  .panel{display:none;animation:fadein .35s ease;}
+  .panel.active{display:block;}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--accent,var(--c5));background:var(--accent-soft,var(--c5-soft));
+    padding:6px 12px;border-radius:100px;margin-bottom:16px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent,var(--c5));}
+  .page-title{font-size:34px;font-weight:800;margin-bottom:10px;}
+  .page-sub{font-size:17px;color:var(--ink-soft);margin-bottom:36px;max-width:640px;}
+
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:28px 30px;margin-bottom:24px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:19px;}
+  .card-flush{padding:0;overflow:hidden;}
+
+  .callout{
+    border-radius:var(--radius);padding:20px 24px;margin:24px 0;
+    background:var(--coral-soft);border:1px solid #FFD9C8;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .callout .icon{font-size:20px;line-height:1;flex-shrink:0;margin-top:1px;}
+  .callout strong{display:block;margin-bottom:3px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#B94A28;}
+  .callout p{margin:0;color:#7A3218;font-size:14.5px;}
+
+  .quote{
+    border-left:4px solid var(--accent,var(--c5));padding:6px 0 6px 22px;margin:22px 0;
+    font-family:'Sora';font-size:19px;font-weight:600;color:var(--ink);font-style:normal;
+  }
+  .quote cite{display:block;font-family:'Inter';font-style:normal;font-size:13px;color:var(--ink-faint);margin-top:8px;font-weight:500;}
+
+  .prompt-box{
+    background:var(--ink);color:#fff;border-radius:var(--radius);padding:22px 26px;margin:24px 0;
+  }
+  .prompt-box strong{color:#fff;display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;opacity:.65;margin-bottom:8px;}
+  .prompt-box p{color:#DCE3F0;margin:0;font-size:16px;font-weight:500;line-height:1.5;}
+  .prompt-box p+p{margin-top:8px;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+
+  /* step chips */
+  .steps{display:flex;flex-direction:column;gap:0;margin:28px 0;}
+  .step{display:flex;gap:18px;position:relative;padding-bottom:28px;}
+  .step:last-child{padding-bottom:0;}
+  .step::before{
+    content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--border);
+  }
+  .step:last-child::before{display:none;}
+  .step-num{
+    width:40px;height:40px;border-radius:50%;background:var(--accent-soft,var(--c5-soft));color:var(--accent,var(--c5));
+    display:flex;align-items:center;justify-content:center;font-family:'Sora';font-weight:800;font-size:15px;
+    flex-shrink:0;z-index:1;border:2px solid var(--surface);
+  }
+  .step-body{padding-top:6px;}
+  .step-body h4{font-size:16px;margin-bottom:6px;}
+  .step-body p{margin-bottom:0;font-size:14.5px;}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--bg);font-family:'Sora';font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);}
+  td input, td textarea, td select{
+    width:100%;border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 6px;
+    color:var(--ink);resize:vertical;
+  }
+  td input:hover, td textarea:hover, td select:hover{background:var(--bg);}
+  td input:focus, td textarea:focus, td select:focus{background:#fff;border-color:var(--c5);}
+  .table-wrap{overflow-x:auto;border-radius:var(--radius-sm);}
+  .fillable-tag{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--good);
+    background:var(--c1-soft);padding:4px 10px;border-radius:100px;margin-bottom:14px;
+  }
+  .table-actions{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
+  .btn{
+    border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:8px 14px;
+    font-size:13px;font-weight:600;color:var(--ink);
+  }
+  .btn:hover{border-color:var(--c5);color:var(--c5);}
+  .btn-primary{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .btn-primary:hover{background:#000;color:#fff;}
+  .save-hint{font-size:12px;color:var(--ink-faint);}
+
+  /* ---- Journey wheel (precise replica of the reference chart) ---- */
+  .wheel-zone{display:flex;justify-content:center;padding:30px 0 10px;}
+  .wheel-outer{position:relative;width:min(600px,94vw);aspect-ratio:1/1;}
+  .wheel-outer svg{width:100%;height:100%;display:block;overflow:visible;}
+  .wheel-wedge{cursor:pointer;transition:filter .15s ease, opacity .15s ease;}
+  .wheel-wedge:hover{filter:brightness(1.08);}
+  .wheel-wedge.done{opacity:.82;}
+  .wheel-center-hit{cursor:pointer;}
+  .wheel-center-hit:hover .wheel-center-circle{filter:brightness(1.15);}
+  .wheel-center-circle{transition:filter .15s ease;}
+  .wheel-title-text{cursor:pointer;}
+  .wheel-triangle{pointer-events:none;}
+  .wheel-label{
+    font-family:'Sora',sans-serif;font-weight:700;fill:#fff;pointer-events:none;
+    font-size:17px;letter-spacing:.01em;
+  }
+  .wheel-title-label{
+    font-family:'Sora',sans-serif;font-weight:800;fill:#14161A;font-size:26px;pointer-events:none;
+  }
+  .wheel-center-label{font-family:'Sora',sans-serif;font-weight:800;fill:#fff;font-size:19px;}
+  .wheel-bubble{
+    position:absolute;transform:translate(-50%,-50%);
+    background:var(--c1);color:#fff;border-radius:100px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Sora';font-weight:700;padding:10px 16px;
+    box-shadow:0 4px 10px rgba(0,0,0,.18);line-height:1.2;
+    cursor:pointer;border:none;font-size:13.5px;white-space:pre-line;
+    transition:transform .15s ease;
+  }
+  .wheel-bubble:hover{transform:translate(-50%,-50%) scale(1.07);}
+  .wheel-bubble.done{box-shadow:0 4px 10px rgba(0,0,0,.18), 0 0 0 3px rgba(255,255,255,.7) inset;}
+  .wheel-bubble.small{font-size:12.5px;padding:8px 14px;}
+  @media(max-width:600px){
+    .wheel-label{font-size:12px;}
+    .wheel-title-label{font-size:18px;}
+    .wheel-center-label{font-size:14px;}
+    .wheel-bubble{font-size:10.5px;padding:6px 10px;}
+    .wheel-bubble.small{font-size:9.5px;padding:5px 9px;}
+  }
+
+  /* ---- login gate ---- */
+  .login-screen{
+    position:fixed;inset:0;z-index:100;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;padding:20px;
+  }
+  .login-card{
+    width:100%;max-width:380px;background:var(--surface);border-radius:20px;padding:36px 32px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+  }
+  .login-card .brand-mark{font-size:22px;margin-bottom:4px;}
+  .login-card h2{font-size:20px;margin-top:14px;}
+  .login-card p.sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:22px;}
+  .login-field{margin-bottom:14px;}
+  .login-field label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+  .login-field input{
+    width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 13px;font-size:14.5px;
+  }
+  .login-field input:focus{border-color:var(--c5);}
+  .login-error{
+    background:#FDECEA;color:var(--bad);font-size:13px;font-weight:600;padding:10px 12px;border-radius:8px;
+    margin-bottom:14px;display:none;
+  }
+  .login-error.show{display:block;}
+  .login-submit{
+    width:100%;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:12px;
+    font-size:14.5px;font-weight:700;margin-top:6px;
+  }
+  .login-submit:hover{background:#000;}
+  .login-note{font-size:11.5px;color:var(--ink-faint);margin-top:16px;text-align:center;}
+  .app.locked{display:none;}
+
+  /* habit legend list under wheel (mobile fallback + reading order) */
+  .habit-legend{list-style:none;margin:36px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .habit-legend li{
+    display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-sm);padding:14px 16px;
+  }
+  .habit-legend .sw{width:10px;border-radius:6px;align-self:stretch;background:var(--sw);flex-shrink:0;}
+  .habit-legend h4{font-size:14.5px;margin-bottom:3px;}
+  .habit-legend p{font-size:13.5px;margin:0;}
+
+  /* ---- learning zone ---- */
+  .zone-wrap{display:flex;justify-content:center;padding:20px 0;}
+  .zone{position:relative;width:min(380px,88vw);aspect-ratio:1/1;}
+  .zone-ring{position:absolute;border-radius:50%;display:flex;align-items:flex-start;justify-content:center;}
+  .zone-ring .zlabel{margin-top:10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+  .zone-death{inset:0;background:#F6D8D3;}
+  .zone-death .zlabel{color:#B33A2A;}
+  .zone-panic{inset:11%;background:#FBE7C6;}
+  .zone-panic .zlabel{color:#B3781A;}
+  .zone-learn{inset:24%;background:#CFEFE0;}
+  .zone-learn .zlabel{color:#1F7A54;}
+  .zone-comfort{inset:40%;background:#FFFFFF;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;}
+  .zone-comfort .zc-inner{text-align:center;padding:6px;}
+  .zone-comfort strong{display:block;font-family:'Sora';font-size:14px;}
+  .zone-comfort span{font-size:10.5px;color:var(--ink-faint);}
+  .zone-pulse{
+    position:absolute;inset:24%;border-radius:50%;border:2px solid #1F9D63;opacity:0;
+    animation:pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse{0%{opacity:.55;transform:scale(0.97);}100%{opacity:0;transform:scale(1.12);}}
+
+  /* ---- DISC quadrant ---- */
+  .disc-wrap{position:relative;max-width:560px;margin:32px auto 8px;}
+  .disc-grid{
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+    aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  }
+  .disc-cell{
+    padding:18px;color:#fff;position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+    border:none;text-align:left;font-family:inherit;
+  }
+  .disc-cell .dq{font-family:'IBM Plex Mono';font-size:24px;font-weight:600;opacity:.55;position:absolute;top:14px;left:16px;}
+  .disc-cell .dname{font-family:'Sora';font-weight:800;font-size:18px;}
+  .disc-cell .dcolorname{font-size:12px;opacity:.85;font-weight:600;}
+  .disc-cell.d{background:#D8433B;}
+  .disc-cell.i{background:#F0A93A;}
+  .disc-cell.s{background:#4E9A5A;}
+  .disc-cell.c{background:#2E6FE0;}
+  .disc-cell:hover{filter:brightness(1.06);}
+  .disc-axis-top,.disc-axis-bottom{text-align:center;font-size:12px;font-weight:700;color:var(--ink-soft);margin:8px 0;text-transform:uppercase;letter-spacing:.05em;}
+  .disc-axis-left,.disc-axis-right{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:var(--ink-faint);writing-mode:vertical-rl;text-transform:uppercase;letter-spacing:.05em;}
+  .disc-axis-left{left:-26px;}
+  .disc-axis-right{right:-26px;transform:translateY(-50%) rotate(180deg);}
+
+  .disc-detail{
+    margin-top:20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);
+    padding:24px 26px;display:none;
+  }
+  .disc-detail.show{display:block;animation:fadein .3s ease;}
+  .disc-detail .dd-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .disc-detail .dd-badge{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Sora';font-weight:800;}
+  .dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .dd-item{background:var(--bg);border-radius:10px;padding:12px 14px;}
+  .dd-item .lbl{font-size:11px;text-transform:uppercase;font-weight:700;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:4px;}
+  .dd-item p{margin:0;font-size:13.5px;}
+
+  .perc-table td:nth-child(2){color:var(--good);}
+  .perc-table td:nth-child(3){color:var(--bad);}
+
+  /* comparative value chart */
+  .cv-chart{display:flex;flex-direction:column;gap:3px;margin:26px 0;}
+  .cv-row{
+    display:flex;align-items:center;gap:14px;padding:11px 16px;border-radius:10px;color:#fff;
+  }
+  .cv-row .cv-name{font-family:'Sora';font-weight:700;font-size:13.5px;width:170px;flex-shrink:0;}
+  .cv-row .cv-desc{font-size:12.5px;opacity:.92;}
+  .cv-bracket{
+    display:flex;justify-content:flex-end;padding-right:6px;margin-top:4px;
+  }
+  .cv-bracket span{font-size:11px;font-weight:700;color:var(--bad);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* quiz */
+  .quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:18px;}
+  .quiz-q .qn{font-size:11px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .quiz-q h4{font-size:16px;margin-bottom:14px;}
+  .quiz-opts{display:flex;flex-direction:column;gap:8px;}
+  .quiz-opt{
+    display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:11px 14px;
+    font-size:14px;transition:border-color .15s;
+  }
+  .quiz-opt input{margin:0;}
+  .quiz-opt.correct{border-color:var(--good);background:var(--c1-soft);}
+  .quiz-opt.incorrect{border-color:var(--bad);background:#FDECEA;}
+  .quiz-fill input{width:100%;max-width:340px;border:1px solid var(--border);border-radius:8px;padding:9px 12px;}
+  .quiz-feedback{margin-top:10px;font-size:13.5px;font-weight:600;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.ok{color:var(--good);}
+  .quiz-feedback.no{color:var(--bad);}
+  .quiz-short textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 14px;min-height:80px;}
+  .quiz-summary{
+    position:sticky;bottom:20px;background:var(--ink);color:#fff;border-radius:16px;padding:18px 24px;
+    display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 30px rgba(0,0,0,.25);margin-top:24px;
+  }
+  .quiz-summary .qs-score{font-family:'Sora';font-weight:800;font-size:20px;}
+  .quiz-summary .qs-label{font-size:12px;opacity:.7;}
+
+  /* charter poster (replica of the Team Charter template slide) */
+  .poster{
+    background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    padding:26px;box-shadow:var(--shadow);margin-bottom:28px;
+  }
+  .poster-grid{
+    display:grid;
+    grid-template-columns:1.15fr 1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:16px;
+  }
+  .poster-box{border-radius:14px;padding:20px 22px;color:#fff;display:flex;flex-direction:column;}
+  .poster-box h4{
+    font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#fff;opacity:.92;
+    margin-bottom:14px;font-family:'Sora';font-weight:800;
+  }
+  .poster-box .pb-sub{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;opacity:.85;margin:12px 0 5px;}
+  .poster-box .pb-sub:first-of-type{margin-top:0;}
+  .poster-box textarea{
+    width:100%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:8px;
+    color:#fff;padding:8px 10px;font-size:13px;min-height:56px;
+  }
+  .poster-box textarea::placeholder{color:rgba(255,255,255,.6);}
+  .poster-ways{grid-column:1;grid-row:1/3;background:#00CF6A;}
+  .poster-purpose{grid-column:2;grid-row:1;background:#8C52FF;}
+  .poster-projects{grid-column:3;grid-row:1;background:#00B3D8;}
+  .poster-wheel{grid-column:2;grid-row:2;background:var(--bg);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:10px;}
+  .poster-review{grid-column:3;grid-row:2;background:#0033C9;}
+  .poster-styles{grid-column:1/4;grid-row:3;background:#FFFFFF;border:1px solid var(--border);color:var(--ink);}
+  .poster-expect{grid-column:1/4;grid-row:4;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  .poster-expect .poster-box{background:#90E0EF;color:#0A2A33;}
+  .poster-expect .poster-box h4{color:#0A2A33;opacity:.85;}
+  .poster-expect .poster-box textarea{background:rgba(255,255,255,.5);border-color:rgba(10,42,51,.2);color:#0A2A33;}
+  .poster-expect .poster-box textarea::placeholder{color:rgba(10,42,51,.5);}
+  .poster-purpose-verbs{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+  .poster-purpose-verbs input{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:8px;
+    color:#fff;padding:7px 10px;font-size:13px;width:100%;
+  }
+  .poster-purpose-verbs input::placeholder{color:rgba(255,255,255,.6);}
+  .poster-mini-table{width:100%;font-size:11.5px;border-collapse:collapse;}
+  .poster-mini-table th,.poster-mini-table td{border:1px solid rgba(255,255,255,.35);padding:5px 6px;}
+  .poster-mini-table th{background:rgba(255,255,255,.18);font-weight:700;}
+  .poster-mini-table input,.poster-mini-table select{background:rgba(255,255,255,.12);border:none;color:#fff;width:100%;font-size:11.5px;border-radius:4px;padding:3px 4px;}
+  .poster-styles table{font-size:12.5px;}
+  .poster-styles th{background:var(--bg);}
+  .poster-styles .table-actions{margin-top:10px;}
+  @media(max-width:900px){
+    .poster-grid{grid-template-columns:1fr 1fr;}
+    .poster-ways{grid-column:1/3;grid-row:1;}
+    .poster-purpose{grid-column:1;grid-row:2;}
+    .poster-projects{grid-column:2;grid-row:2;}
+    .poster-wheel{grid-column:1;grid-row:3;}
+    .poster-review{grid-column:2;grid-row:3;}
+    .poster-styles{grid-column:1/3;grid-row:4;}
+    .poster-expect{grid-column:1/3;grid-row:5;grid-template-columns:1fr;}
+  }
+
+  /* charter */
+  .charter-sheet{background:linear-gradient(180deg,#0C1E45,#132B6B);color:#fff;border-radius:20px;padding:34px 38px;margin-bottom:28px;}
+  .charter-sheet .cs-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.6;font-weight:700;margin-bottom:8px;}
+  .charter-sheet h2{color:#fff;font-size:26px;}
+  .charter-sheet p{color:#B9C4E0;margin-bottom:0;}
+  .charter-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px;margin-bottom:18px;}
+  .charter-block h4{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint);margin-bottom:12px;}
+  .charter-empty{color:var(--ink-faint);font-size:14px;font-style:italic;}
+  .charter-purpose-line{font-family:'Sora';font-size:16px;font-weight:600;margin:3px 0;}
+  .charter-link{font-size:12.5px;font-weight:700;color:var(--c5);text-decoration:none;}
+
+  .footnav{display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+  .footnav a{
+    display:flex;flex-direction:column;text-decoration:none;color:var(--ink);
+    font-size:13px;max-width:260px;
+  }
+  .footnav a span.lbl{color:var(--ink-faint);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:3px;}
+  .footnav a.next{text-align:right;margin-left:auto;}
+  .footnav a:hover{color:var(--c5);}
+
+  ul.plain{margin:0 0 1em;padding-left:20px;}
+  ul.plain li{margin-bottom:6px;color:var(--ink-soft);line-height:1.6;}
+
+  .sidebar-overlay{display:none;}
+
+  @media(max-width:960px){
+    .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.2);}
+    .sidebar.open{transform:translateX(0);}
+    .topbar{display:flex;}
+    .content{padding:28px 20px 80px;}
+    .grid-2,.grid-4{grid-template-columns:1fr;}
+    .sidebar-overlay.show{display:block;position:fixed;inset:0;background:rgba(10,20,40,.4);z-index:19;}
+    .wheel-outer{margin-top:10px;}
+    .charter-sheet{padding:26px 22px;}
+    .page-title{font-size:27px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <span class="brand-mark"><span class="z1">Zalo</span><span class="z2">pay</span></span>
+    <h2>HPT Pre-Read</h2>
+    <p class="sub">This pre-read is for Zalopay tech leaders participating in the High-Performing Teams workshop. Please sign in to continue.</p>
+    <div class="login-error" id="loginError">Incorrect username or password. Please try again.</div>
+    <form id="loginForm">
+      <div class="login-field">
+        <label for="loginUser">Username</label>
+        <input type="text" id="loginUser" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="login-submit">Sign in</button>
+    </form>
+    <p class="login-note">Access provided by your HPT facilitator.</p>
+  </div>
+</div>
+
+<div class="app locked" id="appRoot">
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><span class="z1">Zalo</span><span class="z2">pay</span></span>
+    </div>
+    <div style="padding:0 8px 6px;">
+      <div style="font-family:'Sora';font-weight:700;font-size:15px;">HPT Pre-Read</div>
+      <div class="brand-sub" style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink-faint);">For Tech Leaders</div>
+    </div>
+
+    <div class="nav-group-label">Start Here</div>
+    <ul class="navlist">
+      <li><button class="navlink" data-nav="journey" style="--dot:var(--c6)"><span class="navdot"></span>The Journey</button></li>
+    </ul>
+
+    <div class="nav-group-label">Six Habits</div>
+    <ul class="navlist">
+      <li><button class="navlink" data-nav="h1" style="--dot:var(--c1)"><span class="navnum">01</span><span class="navdot"></span>Clarify Context</button></li>
+      <li><button class="navlink" data-nav="h2" style="--dot:var(--c2)"><span class="navnum">02</span><span class="navdot"></span>Define Your Why</button></li>
+      <li><button class="navlink" data-nav="h3" style="--dot:var(--c3)"><span class="navnum">03</span><span class="navdot"></span>Set Clear Roles</button></li>
+      <li><button class="navlink" data-nav="h4" style="--dot:var(--c4)"><span class="navnum">04</span><span class="navdot"></span>Cultivate Collaboration</button></li>
+      <li><button class="navlink" data-nav="h5" style="--dot:var(--c5)"><span class="navnum">05</span><span class="navdot"></span>Align Ways of Working</button></li>
+      <li><button class="navlink" data-nav="h6" style="--dot:var(--c6)"><span class="navnum">06</span><span class="navdot"></span>Review, Reflect, Recommit</button></li>
+    </ul>
+
+    <div class="nav-group-label">Wrap-Up</div>
+    <ul class="navlist">
+      <li><button class="navlink" data-nav="charter" style="--dot:var(--coral)"><span class="navdot"></span>Your Team Charter</button></li>
+      <li><button class="navlink" data-nav="quiz" style="--dot:var(--coral)"><span class="navdot"></span>Knowledge Check</button></li>
+    </ul>
+
+    <div class="sidebar-foot">
+      <button class="reset-btn" id="resetBtn">Clear my saved answers</button>
+      <button class="reset-btn" id="logoutBtn" style="margin-top:8px;">Log out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span></button>
+      <span style="font-family:'Sora';font-weight:700;font-size:14px;">HPT Pre-Read</span>
+      <span style="width:38px;"></span>
+    </div>
+
+    <div class="content">
+
+      <!-- ===================== JOURNEY ===================== -->
+      <section class="panel" id="panel-journey">
+        <span class="eyebrow" style="--accent:var(--c6);--accent-soft:var(--c6-soft);"><span class="dot"></span>Before You Begin</span>
+        <h1 class="page-title">This isn't a training. It's a journey.</h1>
+        <p class="page-sub">High-Performing Teams (HPT) is not a class or a one-time program — it's an ongoing journey where your team builds habits around <em>what</em> you collaborate on and <em>how</em> you collaborate. Teams succeed by practicing these habits, not by attending a session once.</p>
+
+        <div class="card">
+          <p style="margin-bottom:0;">HPTs focus on the internal dynamics of a team — collaborating more intentionally and effectively. Success and high performance are the <strong>outcome</strong> of that collaboration, not the starting point. This pre-read exists to get you and your team ready to do that work together.</p>
+        </div>
+
+        <h3 style="margin-top:40px;">Step into your Learning Zone</h3>
+        <p>Growth doesn't happen in the Comfort Zone. This journey will ask you and your team to deliberately stretch beyond what's familiar — without tipping into panic.</p>
+
+        <div class="zone-wrap">
+          <div class="zone">
+            <div class="zone-ring zone-death"><span class="zlabel">Death Zone</span></div>
+            <div class="zone-ring zone-panic"><span class="zlabel">Panic Zone</span></div>
+            <div class="zone-pulse"></div>
+            <div class="zone-ring zone-learn"><span class="zlabel">Learning Zone</span></div>
+            <div class="zone-ring zone-comfort">
+              <div class="zc-inner">
+                <strong>Comfort Zone</strong>
+                <span>the sum of our current habits</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13.5px;color:var(--ink-faint);margin-top:-6px;">Too little stretch, and habits never change. Too much, and the team shuts down. The Learning Zone is where real habit-building happens.</p>
+
+        <h3 style="margin-top:44px;">How to use this pre-read</h3>
+        <p>The workshop is built around a single model: the Six Habits of High-Performing Teams. They're not a checklist — they're a continuous cycle your team keeps returning to, all circling one question: <strong>how do we learn?</strong> Tap any habit below to jump straight to it.</p>
+
+        <div class="wheel-zone">
+          <div class="wheel-outer" id="wheelOuter">
+            <svg viewBox="0 0 600 600">
+              <defs>
+                <path id="arcTitle" d="M 123.66 57.29 A 300 300 0 0 1 476.34 57.29" fill="none"/>
+                <path id="arcH2" d="M 179.29 161.13 A 184 184 0 0 1 420.71 161.13" fill="none"/>
+                <path id="arcH3" d="M 438.87 179.29 A 184 184 0 0 1 438.87 420.71" fill="none"/>
+                <path id="arcH4" d="M 179.29 438.87 A 184 184 0 0 0 420.71 438.87" fill="none"/>
+                <path id="arcH5" d="M 161.13 420.71 A 184 184 0 0 1 161.13 179.29" fill="none"/>
+              </defs>
+
+              <circle cx="300" cy="300" r="270" fill="none" stroke="#0033C9" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/>
+
+              <path class="wheel-wedge" data-nav="h2" data-wedge="h2" style="fill:#00CF6A" d="M 140.58 116.61 A 243 243 0 0 1 459.42 116.61 L 382.01 205.66 A 125 125 0 0 0 217.99 205.66 Z"></path>
+              <path class="wheel-wedge" data-nav="h3" data-wedge="h3" style="fill:#00B3D8" d="M 483.39 140.58 A 243 243 0 0 1 483.39 459.42 L 394.34 382.01 A 125 125 0 0 0 394.34 217.99 Z"></path>
+              <path class="wheel-wedge" data-nav="h4" data-wedge="h4" style="fill:#90E0EF" d="M 459.42 483.39 A 243 243 0 0 1 140.58 483.39 L 217.99 394.34 A 125 125 0 0 0 382.01 394.34 Z"></path>
+              <path class="wheel-wedge" data-nav="h5" data-wedge="h5" style="fill:#0070C0" d="M 116.61 459.42 A 243 243 0 0 1 116.61 140.58 L 205.66 217.99 A 125 125 0 0 0 205.66 382.01 Z"></path>
+
+              <polygon class="wheel-triangle" points="405.9,164.5 420.7,145.5 450.7,194.5" fill="#8C8C93"></polygon>
+              <polygon class="wheel-triangle" points="435.5,405.9 454.5,420.7 405.5,450.7" fill="#8C8C93"></polygon>
+              <polygon class="wheel-triangle" points="194.1,435.5 179.3,454.5 149.3,405.5" fill="#8C8C93"></polygon>
+              <polygon class="wheel-triangle" points="164.5,194.1 145.5,179.3 194.5,149.3" fill="#8C8C93"></polygon>
+
+              <text class="wheel-label"><textPath href="#arcH2" startOffset="50%" text-anchor="middle">Define Your &#8220;Why&#8221;</textPath></text>
+              <text class="wheel-label"><textPath href="#arcH3" startOffset="50%" text-anchor="middle">Set Clear Roles</textPath></text>
+              <text class="wheel-label"><textPath href="#arcH4" startOffset="50%" text-anchor="middle">Cultivate Collaboration</textPath></text>
+              <text class="wheel-label"><textPath href="#arcH5" startOffset="50%" text-anchor="middle">Align Our Ways of Working</textPath></text>
+
+              <g class="wheel-center-hit" data-nav="h6" data-wedge="h6">
+                <circle class="wheel-center-circle" cx="300" cy="300" r="110" fill="#0033C9"></circle>
+                <text class="wheel-center-label" text-anchor="middle" x="300" y="308">
+                  <tspan x="300" dy="-14">Review,</tspan>
+                  <tspan x="300" dy="24">Reflect, and</tspan>
+                  <tspan x="300" dy="24">Recommit</tspan>
+                </text>
+              </g>
+
+              <text class="wheel-title-label wheel-title-text" data-nav="h1" data-wedge="h1"><textPath href="#arcTitle" startOffset="50%" text-anchor="middle">Clarify Context</textPath></text>
+            </svg>
+
+            <button class="wheel-bubble" data-nav="h1" data-wedge="h1" style="left:21.6%;top:13.2%;">What is the
+context?</button>
+            <button class="wheel-bubble small" data-nav="h2" data-wedge="h2" style="left:72.5%;top:16.9%;">Why?</button>
+            <button class="wheel-bubble small" data-nav="h3" data-wedge="h3" style="left:87.4%;top:34.5%;">What?</button>
+            <button class="wheel-bubble small" data-nav="h3" data-wedge="h3" style="left:88%;top:70%;">Who?</button>
+            <button class="wheel-bubble" data-nav="h4" data-wedge="h4" style="left:78.1%;top:83.6%;">How do we
+collab.?</button>
+            <button class="wheel-bubble" data-nav="h5" data-wedge="h5" style="left:16.3%;top:75.6%;">How do we
+work?</button>
+            <button class="wheel-bubble small" data-nav="h6" data-wedge="h6" style="left:50.5%;top:37.2%;">How do we learn?</button>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:12.5px;color:var(--ink-faint);margin-top:14px;">Tap any segment, bubble, or label to jump to that habit.</p>
+
+        <ul class="habit-legend">
+          <li><div class="sw" style="--sw:var(--c1)"></div><div><h4>1 · Clarify Context</h4><p>Build a shared understanding of where we are, what's changing around us, and why the team exists now.</p></div></li>
+          <li><div class="sw" style="--sw:var(--c2)"></div><div><h4>2 · Define Our "Why"</h4><p>Agree on the unique contribution this team must make — what we must do together that no one else can.</p></div></li>
+          <li><div class="sw" style="--sw:var(--c3)"></div><div><h4>3 · Set Clear Roles</h4><p>Define who is doing what, and distinguish between team, subgroup, and individual responsibilities.</p></div></li>
+          <li><div class="sw" style="--sw:var(--c4)"></div><div><h4>4 · Cultivate Collaboration</h4><p>Build trust, understand each other's styles and strengths, and find ways to bring the best out of each other.</p></div></li>
+          <li><div class="sw" style="--sw:var(--c5)"></div><div><h4>5 · Align Our Ways of Working</h4><p>Agree on how we communicate, make decisions, resolve conflicts, and hold effective meetings.</p></div></li>
+          <li><div class="sw" style="--sw:var(--c6)"></div><div><h4>6 · Review, Reflect &amp; Recommit</h4><p>Regularly check progress, celebrate wins, surface tensions, and commit to growing as a team.</p></div></li>
+        </ul>
+
+        <div class="callout" style="margin-top:32px;">
+          <span class="icon">📘</span>
+          <div>
+            <strong>What this pre-read covers</strong>
+            <p>Six parts — one per habit — plus a closing section where everything you fill in consolidates into a draft <strong>Team Charter</strong>, and a short knowledge check at the end. Fields you fill in are saved in this browser as you go, so you can leave and come back.</p>
+          </div>
+        </div>
+
+        <div class="footnav">
+          <span></span>
+          <a class="next" data-nav="h1"><span class="lbl">Next</span>Habit 1 — Clarify Context →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 1 ===================== -->
+      <section class="panel" id="panel-h1">
+        <span class="eyebrow" style="--accent:var(--c1);--accent-soft:var(--c1-soft);"><span class="dot"></span>Habit 1 of 6</span>
+        <h1 class="page-title">Clarify Context</h1>
+        <p class="page-sub">Before a team can agree on its purpose, roles, or ways of working, it needs a shared picture of the environment it's operating in. This habit builds that shared understanding first — everything else is built on top of it.</p>
+
+        <div class="quote" style="--accent:var(--c1);">
+          Build a shared understanding of where we are, what's changing around us, and why the team exists now.
+        </div>
+
+        <div class="card">
+          <h3>Two things to clarify, together</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c1-soft);--accent:var(--c1);">1</div>
+              <div class="step-body">
+                <h4>Identify the factors that impact your team's performance</h4>
+                <p>Think broadly: organizational change, market conditions, shifting strategic priorities, resourcing constraints, stakeholder expectations, recent wins or setbacks. What's actually shaping the conditions your team works in right now?</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c1-soft);--accent:var(--c1);">2</div>
+              <div class="step-body">
+                <h4>Clarify how each factor impacts the team</h4>
+                <p>For each factor, get specific: does it change priorities? Add pressure? Create ambiguity about who owns what? Naming the mechanism — not just the factor — is what turns context into something the team can act on.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>Discuss in groups, during the workshop</strong>
+          <p>What factors impact your team's performance?</p>
+          <p>How do these factors impact your team?</p>
+        </div>
+
+        <div class="callout">
+          <span class="icon">💡</span>
+          <div>
+            <strong>Why this comes first</strong>
+            <p>A team that skips this habit ends up debating its purpose or roles without a shared read on reality — which usually surfaces as disagreement about something else entirely. Clarifying context first removes that noise.</p>
+          </div>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="journey"><span class="lbl">Back</span>← The Journey</a>
+          <a class="next" data-nav="h2"><span class="lbl">Next</span>Habit 2 — Define Your Why →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 2 ===================== -->
+      <section class="panel" id="panel-h2">
+        <span class="eyebrow" style="--accent:var(--c2);--accent-soft:var(--c2-soft);"><span class="dot"></span>Habit 2 of 6</span>
+        <h1 class="page-title">Define Your "Why"</h1>
+        <p class="page-sub">Agree on the unique contribution this team must make — what you must do together that no one else can. Two steps get you there.</p>
+
+        <div class="card">
+          <h3>Two steps to your team's "Why"</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c2-soft);--accent:var(--c2);">1</div>
+              <div class="step-body">
+                <h4>What can only this team accomplish?</h4>
+                <p>What are the things that <strong>ONLY OUR TEAM</strong> can accomplish — that nobody else can? Only for this team, the people in this room. Capture these as verbs: things the team <em>does</em>.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c2-soft);--accent:var(--c2);">2</div>
+              <div class="step-body">
+                <h4>What impact do you want to see?</h4>
+                <p>If the team does those things successfully, what's the impact — the thing you'll actually see happen as a result?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:38px;">Use this framework</h3>
+        <div class="card" style="border:2px solid var(--c2);">
+          <div style="text-align:center;">
+            <div class="fillable-tag" style="background:var(--c2-soft);color:var(--c2);">✎ Fillable — saved automatically</div>
+          </div>
+          <div style="font-family:'Sora';font-weight:800;font-size:15px;margin-bottom:10px;">[YOUR TEAM NAME] EXISTS TO <span style="color:var(--c2);">…</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+            <input class="charter-input" data-key="why-verb-1" placeholder="(Verb) …  e.g. Advocate for …" style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
+            <input class="charter-input" data-key="why-verb-2" placeholder="(Verb) …" style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
+            <input class="charter-input" data-key="why-verb-3" placeholder="(Verb) …" style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
+          </div>
+          <div style="font-family:'Sora';font-weight:800;font-size:15px;margin-bottom:10px;">SO THAT <span style="color:var(--c2);">…</span></div>
+          <textarea class="charter-input" data-key="why-impact" placeholder="The impact we want to see…" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:60px;"></textarea>
+        </div>
+
+        <div class="callout">
+          <span class="icon">✅</span>
+          <div>
+            <strong>You know it's a good "Why" if it answers</strong>
+            <p>Why is it necessary for us to work together as a team rather than individually? And: what's at risk if we fail to collaborate effectively as a team?</p>
+          </div>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h1"><span class="lbl">Back</span>← Habit 1</a>
+          <a class="next" data-nav="h3"><span class="lbl">Next</span>Habit 3 — Set Clear Roles →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 3 ===================== -->
+      <section class="panel" id="panel-h3">
+        <span class="eyebrow" style="--accent:var(--c3);--accent-soft:var(--c3-soft);"><span class="dot"></span>Habit 3 of 6</span>
+        <h1 class="page-title">Set Clear Roles</h1>
+        <p class="page-sub">Who works with whom, on what? Very little of a team's work is actually shared by the entire team — most of it happens in subgroups or by individuals. This habit makes that visible, then assigns clear roles to it.</p>
+
+        <div style="display:flex;justify-content:center;margin:28px 0;">
+          <svg width="280" height="280" viewBox="0 0 280 280" style="max-width:100%;">
+            <circle cx="140" cy="140" r="135" fill="var(--c1)"/>
+            <circle cx="140" cy="140" r="92" fill="var(--c5)"/>
+            <circle cx="140" cy="140" r="46" fill="#D9C3F0"/>
+            <text x="140" y="42" text-anchor="middle" fill="#fff" font-family="Sora" font-weight="700" font-size="13">Individual Work</text>
+            <text x="140" y="88" text-anchor="middle" fill="#fff" font-family="Sora" font-weight="700" font-size="13">Subgroup Work</text>
+            <text x="140" y="136" text-anchor="middle" fill="#3B2158" font-family="Sora" font-weight="700" font-size="12">Team</text>
+            <text x="140" y="150" text-anchor="middle" fill="#3B2158" font-family="Sora" font-weight="700" font-size="12">Work</text>
+          </svg>
+        </div>
+        <p style="text-align:center;font-size:13.5px;color:var(--ink-faint);margin-top:-16px;">The "Radar Screen" — most work lives in the outer rings, not the center.</p>
+
+        <div class="card">
+          <h3>Three steps</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c3-soft);--accent:var(--c3);">1</div>
+              <div class="step-body">
+                <h4>Identify the projects</h4>
+                <p>List every project or initiative that involves at least one other team member — one initiative per item. Don't include business-as-usual work. Note the owner for each.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c3-soft);--accent:var(--c3);">2</div>
+              <div class="step-body">
+                <h4>Sort them on the Radar Screen</h4>
+                <p>As a group, remove duplicates and sort each item into one of three rings: <strong>Team Work</strong> (everyone involved), <strong>Subgroup</strong> (some members), or <strong>Individual</strong> (one person only). Discuss and agree together.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="--accent-soft:var(--c3-soft);--accent:var(--c3);">3</div>
+              <div class="step-body">
+                <h4>Assign RACI to team and subgroup work</h4>
+                <p>For everything that landed in the Team or Subgroup rings, assign clear roles using RACI (below).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin:26px 0;">
+          <div class="card" style="padding:16px;text-align:center;">
+            <div style="font-family:'Sora';font-weight:800;font-size:22px;color:var(--c3);">R</div>
+            <div style="font-weight:700;font-size:13px;">Responsible</div>
+            <div style="font-size:12px;color:var(--ink-faint);">Does the work</div>
+          </div>
+          <div class="card" style="padding:16px;text-align:center;">
+            <div style="font-family:'Sora';font-weight:800;font-size:22px;color:var(--c3);">A</div>
+            <div style="font-weight:700;font-size:13px;">Accountable</div>
+            <div style="font-size:12px;color:var(--ink-faint);">Owns results</div>
+          </div>
+          <div class="card" style="padding:16px;text-align:center;">
+            <div style="font-family:'Sora';font-weight:800;font-size:22px;color:var(--c3);">C</div>
+            <div style="font-weight:700;font-size:13px;">Consulted</div>
+            <div style="font-size:12px;color:var(--ink-faint);">Gives input</div>
+          </div>
+          <div class="card" style="padding:16px;text-align:center;">
+            <div style="font-family:'Sora';font-weight:800;font-size:22px;color:var(--c3);">I</div>
+            <div style="font-weight:700;font-size:13px;">Informed</div>
+            <div style="font-size:12px;color:var(--ink-faint);">Told what happened</div>
+          </div>
+        </div>
+
+        <h3>Your team's RACI</h3>
+        <div class="fillable-tag">✎ Fillable — saved automatically</div>
+        <div class="card card-flush">
+          <div class="table-wrap">
+            <table id="raciTable">
+              <thead>
+                <tr>
+                  <th style="width:22%;">Project / Initiative</th>
+                  <th class="raci-name-th">Name</th>
+                  <th class="raci-name-th">Name</th>
+                  <th class="raci-name-th">Name</th>
+                  <th class="raci-name-th">Name</th>
+                  <th class="raci-name-th">Name</th>
+                </tr>
+              </thead>
+              <tbody id="raciBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn" id="raciAddRow">+ Add project row</button>
+          <span class="save-hint">Names in the header are editable too — click to rename.</span>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h2"><span class="lbl">Back</span>← Habit 2</a>
+          <a class="next" data-nav="h4"><span class="lbl">Next</span>Habit 4 — Cultivate Collaboration →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 4 ===================== -->
+      <section class="panel" id="panel-h4">
+        <span class="eyebrow" style="--accent:var(--c4);--accent-soft:var(--c4-soft);"><span class="dot"></span>Habit 4 of 6</span>
+        <h1 class="page-title">Cultivate Collaboration</h1>
+        <p class="page-sub">Build trust, understand each other's styles and strengths, and find ways to bring the best out of each other. This habit has two parts: understanding people, and understanding the collaboration itself.</p>
+
+        <span class="eyebrow" style="--accent:var(--c4);--accent-soft:var(--c4-soft);margin-top:8px;">Part A · Understanding People</span>
+
+        <h3 style="margin-top:6px;">4.1 — Understand Yourself: DISC</h3>
+        <p>DISC describes <em>how you show up</em>, not who you are. Everyone has all four styles to some degree — think of them like paints on an artist's palette. Two axes define the four quadrants: how you react to the world (introversion ↔ extraversion), and how you make decisions (thinking ↔ feeling).</p>
+
+        <div class="disc-wrap">
+          <div class="disc-axis-top">Thinking (task-driven)</div>
+          <div class="disc-grid">
+            <button class="disc-cell c" data-disc="c"><span class="dq">C</span><span class="dname">Cool Blue</span><span class="dcolorname">Conscientiousness</span></button>
+            <button class="disc-cell d" data-disc="d"><span class="dq">D</span><span class="dname">Fiery Red</span><span class="dcolorname">Dominance</span></button>
+            <button class="disc-cell s" data-disc="s"><span class="dq">S</span><span class="dname">Earth Green</span><span class="dcolorname">Steadiness</span></button>
+            <button class="disc-cell i" data-disc="i"><span class="dq">I</span><span class="dname">Sunshine Yellow</span><span class="dcolorname">Influence</span></button>
+          </div>
+          <div class="disc-axis-bottom">Feeling (people-driven)</div>
+          <div class="disc-axis-left">Introversion</div>
+          <div class="disc-axis-right">Extraversion</div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--ink-faint);">Tap a quadrant for details.</p>
+
+        <div class="disc-detail" id="discDetail"></div>
+
+        <div class="callout" style="margin-top:28px;">
+          <span class="icon">📄</span>
+          <div>
+            <strong>Understanding your Extended DISC Profile</strong>
+            <p><strong>Profile I — Perceived Need to Adjust:</strong> your conscious persona right now, like a formal portrait. It's transient and shifts with context or pressure.<br><br>
+            <strong>Profile II — Natural Style:</strong> your default behavior when relaxed, like a candid photo. It's more stable — strengths above the midpoint take less energy; areas below require you to stretch.<br><br>
+            The midpoint represents the average person. There's no right or wrong relation of styles — most people show two or three styles as strengths, not just one. Focus on the ~80% that feels true, and ask others to help you see your blind spots.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:44px;">4.2 — Understand Others</h3>
+        <p>You can pick up real signals about someone's style before you ever see their profile: their tone of voice and word choice, body language and gestures, how they interact with you and at what pace, and even their written communication.</p>
+
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Style</th><th>Pace</th><th>Tone</th><th>Volume</th></tr></thead>
+              <tbody>
+                <tr><td>Formal</td><td>Steady</td><td>Reserved</td><td>Quiet</td></tr>
+                <tr><td>Informal</td><td>Fast</td><td>Expressive</td><td>Louder</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h4 style="margin-top:30px;">How each style is perceived — the same trait, seen two ways</h4>
+        <div class="card card-flush">
+          <div class="table-wrap">
+            <table class="perc-table">
+              <thead><tr><th style="width:10%;">Style</th><th>Perceived positively</th><th>Perceived negatively</th></tr></thead>
+              <tbody>
+                <tr><td><strong>C</strong></td><td>Questioning, deliberate, cautious, precise, analytical</td><td>Suspicious, indecisive, reserved, stuffy, cold</td></tr>
+                <tr><td><strong>D</strong></td><td>Demanding, strong-willed, driving, competitive, determined</td><td>Intolerant, impatient, aggressive, overbearing, controlling</td></tr>
+                <tr><td><strong>S</strong></td><td>Stable, reliable, amiable, patient, caring</td><td>Stubborn, plodding, passive, hesitant to change</td></tr>
+                <tr><td><strong>I</strong></td><td>Sociable, fun, dynamic, enthusiastic, persuasive</td><td>Excitable, frantic, hasty, flaky, disorganized</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-faint);margin-top:10px;">The same underlying trait reads as a strength or a flaw depending on the situation — and who's looking at it. That's exactly why naming it explicitly matters more than judging it.</p>
+
+        <h3 style="margin-top:44px;">4.3 — How to Work Together</h3>
+        <p>Once you know your own style, turn it into something usable: 3–5 concrete expectations for how others should collaborate with you. Everyone shares theirs, so the whole team knows how to work with each person.</p>
+
+        <div class="fillable-tag">✎ Fillable — saved automatically</div>
+        <div class="card card-flush">
+          <div class="table-wrap">
+            <table id="styleTable">
+              <thead><tr><th style="width:20%;">Name</th><th>When working with me… (expectations based on my style)</th></tr></thead>
+              <tbody id="styleBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn" id="styleAddRow">+ Add team member</button>
+          <span class="save-hint">e.g. "Give me clear objectives and reasonable timelines" or "Don't spring last-minute changes on me."</span>
+        </div>
+
+        <span class="eyebrow" style="--accent:var(--c4);--accent-soft:var(--c4-soft);margin-top:44px;">Part B · Not All Collaboration Is Equal</span>
+        <h3 style="margin-top:10px;">The Comparative Value Contribution scale</h3>
+        <p>Collaboration exists on a spectrum — and more of it isn't automatically better. The goal is to increase the <em>intentionality</em> of collaboration, but only collaborate when and where it's actually needed.</p>
+
+        <div class="cv-chart">
+          <div class="cv-row" style="background:#1F9D63;"><div class="cv-name">Intentional Collaboration</div><div class="cv-desc">Planned upfront, clear intersection — highest value creation</div></div>
+          <div class="cv-row" style="background:#4AA96C;"><div class="cv-name">Reactive Collaboration</div><div class="cv-desc">Overlap occurs, unplanned, fire-fighting mode</div></div>
+          <div class="cv-row" style="background:#8CB369;"><div class="cv-name">Coordination</div><div class="cv-desc">Same place & time, work in parallel, interaction by coincidence</div></div>
+          <div class="cv-row" style="background:#B7C98C;color:#2c3a1f;"><div class="cv-name">Co-operation</div><div class="cv-desc">Same place & time, work in parallel, low interaction</div></div>
+          <div class="cv-row" style="background:#E8B7A8;color:#5c2415;"><div class="cv-name">Benign Neglect</div><div class="cv-desc">Different locations, weak relationship, polite but disconnected</div></div>
+          <div class="cv-row" style="background:#E08D74;"><div class="cv-name">Passive Aggression</div><div class="cv-desc">Indirect resistance, avoidance, hidden frustration</div></div>
+          <div class="cv-row" style="background:#D9634A;"><div class="cv-name">Unhealthy Competition</div><div class="cv-desc">Win–lose mindset, silo thinking, focus on personal success</div></div>
+          <div class="cv-row" style="background:#B33A2A;"><div class="cv-name">Destructive Politics</div><div class="cv-desc">Power play, agenda-driven, trust erosion</div></div>
+        </div>
+        <div class="cv-bracket"><span>↑ Dysfunction (bottom four)</span></div>
+
+        <div class="prompt-box">
+          <strong>Clarify expectations with "Behavioral Contracting"</strong>
+          <p>Set expectations for how the team will collaborate — using specific, observable behaviors (verbs), not generic "team norms." Base it on this team, this work, and who you actually are as individuals.</p>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h3"><span class="lbl">Back</span>← Habit 3</a>
+          <a class="next" data-nav="h5"><span class="lbl">Next</span>Habit 5 — Align Ways of Working →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 5 ===================== -->
+      <section class="panel" id="panel-h5">
+        <span class="eyebrow" style="--accent:var(--c5);--accent-soft:var(--c5-soft);"><span class="dot"></span>Habit 5 of 6</span>
+        <h1 class="page-title">Align Our Ways of Working</h1>
+        <p class="page-sub">Agree on how we communicate, make decisions, resolve conflicts, and hold effective meetings. Four areas of guiding questions help your team build these agreements together.</p>
+
+        <div class="card">
+          <h3 style="color:var(--c5);">🗓 Team Meetings</h3>
+          <ul class="plain">
+            <li>What types of topics are worth meeting for?</li>
+            <li>How do we set and share the agenda before meetings?</li>
+            <li>How do we keep meetings focused and on time?</li>
+            <li>How do we encourage participation from everyone?</li>
+            <li>How do we capture and share meeting notes and action items?</li>
+            <li>How do we follow up on decisions and next steps?</li>
+          </ul>
+          <div class="fillable-tag">✎ Fillable</div>
+          <textarea class="charter-input" data-key="align-meetings" placeholder="Your team's agreed guidelines for meetings…" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:70px;"></textarea>
+        </div>
+
+        <div class="card">
+          <h3 style="color:var(--c5);">💬 Team Communication</h3>
+          <ul class="plain">
+            <li>Which channel do we use by default for quick alignment, complex topics, decisions, and FYIs?</li>
+            <li>What are our standard response times for normal vs. urgent items?</li>
+            <li>How do we ensure shared understanding?</li>
+            <li>How much communication is too much?</li>
+            <li>Where do we keep final decisions, drafts, and working files? What are our naming/versioning rules?</li>
+          </ul>
+          <div class="fillable-tag">✎ Fillable</div>
+          <textarea class="charter-input" data-key="align-communication" placeholder="Your team's agreed guidelines for communication…" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:70px;"></textarea>
+        </div>
+
+        <div class="card">
+          <h3 style="color:var(--c5);">🎯 Team Decision-Making</h3>
+          <ul class="plain">
+            <li>Which decision modes do we use (consensus, voting, authority-based), and when?</li>
+            <li>Who is accountable for each decision?</li>
+            <li>Do we tend to decide too quickly or too slowly, and in which scenarios?</li>
+            <li>What information and risks do we consider before deciding?</li>
+            <li>How transparent is our decision process today? How are decisions communicated?</li>
+            <li>What causes frustrations today?</li>
+          </ul>
+          <div class="fillable-tag">✎ Fillable</div>
+          <textarea class="charter-input" data-key="align-decisions" placeholder="Your team's agreed guidelines for decisions…" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:70px;"></textarea>
+        </div>
+
+        <div class="card">
+          <h3 style="color:var(--c5);">⚡ Addressing Team Conflict</h3>
+          <ul class="plain">
+            <li>Is everyone comfortable speaking up about concerns and disagreements?</li>
+            <li>What types of conflict does the team face most often — personality-driven (emotional) or substantive (task-related)?</li>
+            <li>How do we show empathy and respect, even when we disagree?</li>
+            <li>How do we resolve conflicts as a team?</li>
+            <li>How can we use conflicts as opportunities for team learning and improvement?</li>
+          </ul>
+          <div class="fillable-tag">✎ Fillable</div>
+          <textarea class="charter-input" data-key="align-conflict" placeholder="Your team's agreed guidelines for conflict…" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:70px;"></textarea>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h4"><span class="lbl">Back</span>← Habit 4</a>
+          <a class="next" data-nav="h6"><span class="lbl">Next</span>Habit 6 — Review, Reflect, Recommit →</a>
+        </div>
+      </section>
+
+      <!-- ===================== HABIT 6 ===================== -->
+      <section class="panel" id="panel-h6">
+        <span class="eyebrow" style="--accent:var(--c6);--accent-soft:var(--c6-soft);"><span class="dot"></span>Habit 6 of 6</span>
+        <h1 class="page-title">Review, Reflect and Recommit</h1>
+        <p class="page-sub">The last habit closes the loop. It focuses on two things: creating accountability for our commitments, and instilling a climate of continuous learning and growth.</p>
+
+        <div class="prompt-box">
+          <strong>Discuss in groups</strong>
+          <p>How will we, as a team, hold ourselves accountable for our commitments?</p>
+          <p>How will we ensure we evaluate the effectiveness of our team charter and the six habits?</p>
+          <p>How will we continue to learn and grow together?</p>
+          <p>How will we celebrate successes and learn from setbacks?</p>
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-faint);">Capture your aligned thoughts as the top five "ground rules" you'll use to hold one another accountable.</p>
+
+        <div class="grid-2" style="margin-top:30px;">
+          <div class="card">
+            <h3 style="font-size:16px;">Formal Habits</h3>
+            <ul class="plain">
+              <li>Start of meetings: review the team charter</li>
+              <li>End of meetings: rate meeting effectiveness</li>
+              <li>Monthly: recognize and celebrate successes</li>
+              <li>Each quarter: review and update charter and RACI</li>
+              <li>Every six months: give 1:1 feedback, update charter</li>
+              <li>Onboard new joiners; get to know their preferences</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="font-size:16px;">Ongoing Habits</h3>
+            <ul class="plain">
+              <li>Hold yourself accountable for commitments and expectations</li>
+              <li>Ask for regular feedback</li>
+              <li>Hold others accountable for commitments and expectations</li>
+              <li>Regularly offer the gift of feedback</li>
+            </ul>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--ink-faint);">Choose fewer, but more impactful habits — which of these would most help your team?</p>
+
+        <h3 style="margin-top:36px;">Suggested next steps to "jump start" your team's learning</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="--accent-soft:var(--c6-soft);--accent:var(--c6);">1</div>
+            <div class="step-body"><h4>Within one month</h4><p>Set collaboration commitments for each key initiative.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="--accent-soft:var(--c6-soft);--accent:var(--c6);">2</div>
+            <div class="step-body"><h4>Within two months</h4><p>Team reviews the charter — what's working, what isn't.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="--accent-soft:var(--c6-soft);--accent:var(--c6);">3</div>
+            <div class="step-body"><h4>Within six months</h4><p>Team gives each other feedback on collaboration commitments and expectations.</p></div>
+          </div>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h5"><span class="lbl">Back</span>← Habit 5</a>
+          <a class="next" data-nav="charter"><span class="lbl">Next</span>Your Team Charter →</a>
+        </div>
+      </section>
+
+      <!-- ===================== CHARTER ===================== -->
+      <section class="panel" id="panel-charter">
+        <span class="eyebrow" style="--accent:var(--coral);--accent-soft:var(--coral-soft);"><span class="dot"></span>Bringing It Together</span>
+        <h1 class="page-title">Your Team Charter</h1>
+        <p class="page-sub">The Charter is a shared document — not carved into stone. It consolidates what you build across all six habits into one page, and it's meant to be reviewed and fine-tuned over time. Fill in any box below — your Habit 2–5 answers are already pulled in automatically.</p>
+
+        <div class="poster">
+          <div class="poster-grid">
+
+            <div class="poster-box poster-ways">
+              <h4>Ways of Working</h4>
+              <div class="pb-sub">Meetings</div>
+              <textarea class="charter-input" data-key="align-meetings" placeholder="Our meeting guidelines…"></textarea>
+              <div class="pb-sub">Communication</div>
+              <textarea class="charter-input" data-key="align-communication" placeholder="Our communication guidelines…"></textarea>
+              <div class="pb-sub">Constructive Conflict</div>
+              <textarea class="charter-input" data-key="align-conflict" placeholder="How we handle conflict…"></textarea>
+              <div class="pb-sub">Effective Decision-Making</div>
+              <textarea class="charter-input" data-key="align-decisions" placeholder="How we make decisions…"></textarea>
+            </div>
+
+            <div class="poster-box poster-purpose">
+              <h4>Team Purpose</h4>
+              <div style="font-size:12.5px;opacity:.85;margin-bottom:6px;">Our Team exists to…</div>
+              <div class="poster-purpose-verbs">
+                <input class="charter-input" data-key="why-verb-1" placeholder="(Verb) …">
+                <input class="charter-input" data-key="why-verb-2" placeholder="(Verb) …">
+                <input class="charter-input" data-key="why-verb-3" placeholder="(Verb) …">
+              </div>
+              <div style="font-size:12.5px;opacity:.85;margin:4px 0 6px;">So that…</div>
+              <textarea class="charter-input" data-key="why-impact" placeholder="The impact we want to see…" style="min-height:44px;"></textarea>
+            </div>
+
+            <div class="poster-box poster-projects">
+              <h4>Our Shared Projects &amp; Roles</h4>
+              <div class="table-wrap">
+                <table class="poster-mini-table" id="posterRaciTable">
+                  <thead><tr id="posterRaciHead"><th style="width:34%;">Project</th></tr></thead>
+                  <tbody id="posterRaciBody"></tbody>
+                </table>
+              </div>
+              <button class="btn" id="posterRaciAddRow" style="margin-top:10px;font-size:11.5px;padding:5px 10px;">+ Row</button>
+            </div>
+
+            <div class="poster-wheel">
+              <svg viewBox="0 0 600 600" style="width:100%;max-width:230px;">
+                <circle cx="300" cy="300" r="270" fill="none" stroke="#0033C9" stroke-width="7" stroke-dasharray="16 12" stroke-linecap="round"/>
+                <path style="fill:#00CF6A" d="M 140.58 116.61 A 243 243 0 0 1 459.42 116.61 L 382.01 205.66 A 125 125 0 0 0 217.99 205.66 Z"></path>
+                <path style="fill:#00B3D8" d="M 483.39 140.58 A 243 243 0 0 1 483.39 459.42 L 394.34 382.01 A 125 125 0 0 0 394.34 217.99 Z"></path>
+                <path style="fill:#90E0EF" d="M 459.42 483.39 A 243 243 0 0 1 140.58 483.39 L 217.99 394.34 A 125 125 0 0 0 382.01 394.34 Z"></path>
+                <path style="fill:#0070C0" d="M 116.61 459.42 A 243 243 0 0 1 116.61 140.58 L 205.66 217.99 A 125 125 0 0 0 205.66 382.01 Z"></path>
+                <polygon points="405.9,164.5 420.7,145.5 450.7,194.5" fill="#8C8C93"></polygon>
+                <polygon points="435.5,405.9 454.5,420.7 405.5,450.7" fill="#8C8C93"></polygon>
+                <polygon points="194.1,435.5 179.3,454.5 149.3,405.5" fill="#8C8C93"></polygon>
+                <polygon points="164.5,194.1 145.5,179.3 194.5,149.3" fill="#8C8C93"></polygon>
+                <circle cx="300" cy="300" r="110" fill="#0033C9"></circle>
+                <text text-anchor="middle" x="300" y="308" style="font-family:'Sora';font-weight:800;fill:#fff;font-size:26px;">
+                  <tspan x="300" dy="-14">Review,</tspan>
+                  <tspan x="300" dy="30">Reflect, and</tspan>
+                  <tspan x="300" dy="30">Recommit</tspan>
+                </text>
+              </svg>
+            </div>
+
+            <div class="poster-box poster-review">
+              <h4>Review, Reflect and Recommit</h4>
+              <textarea class="charter-input" data-key="charter-review-plan" placeholder="How we'll hold ourselves accountable, review this charter, and celebrate progress (cadence, rituals, owners)…" style="min-height:170px;"></textarea>
+            </div>
+
+            <div class="poster-box poster-styles">
+              <h4 style="color:var(--ink);">Cultivate Collaboration: Understanding Each Other's Styles</h4>
+              <div class="table-wrap">
+                <table id="discTable">
+                  <thead><tr><th style="width:26%;">Name</th><th>Profile I — Perceived Need to Adjust</th><th>Profile II — Natural Style</th></tr></thead>
+                  <tbody id="discBody"></tbody>
+                </table>
+              </div>
+              <div class="table-actions"><button class="btn" id="discAddRow">+ Add team member</button><span class="save-hint">e.g. "DC" or "Cool Blue / Fiery Red" — however your team records DISC results.</span></div>
+            </div>
+
+            <div class="poster-expect">
+              <div class="poster-box">
+                <h4>Cultivate Collaboration: Expectations of Each Other</h4>
+                <textarea class="charter-input" data-key="charter-expect-each-other" placeholder="What we expect from one another as teammates…" style="min-height:120px;"></textarea>
+              </div>
+              <div class="poster-box">
+                <h4>Expectations of Manager</h4>
+                <textarea class="charter-input" data-key="charter-expect-mgr" placeholder="What we expect from our manager…" style="min-height:120px;"></textarea>
+              </div>
+              <div class="poster-box">
+                <h4>Manager's Expectations of Us</h4>
+                <textarea class="charter-input" data-key="charter-expect-of-us" placeholder="What our manager expects from us…" style="min-height:120px;"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="icon">🔁</span>
+          <div>
+            <strong>How to customize this for your team</strong>
+            <p>Replace every placeholder with what your team actually agrees to during the workshop. Revisit it quarterly, update RACI and DISC every 6–12 months, and treat any part of it as fair game to change as your context shifts — the Charter should always reflect how your team works today, not how it worked when you wrote it.</p>
+          </div>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="h6"><span class="lbl">Back</span>← Habit 6</a>
+          <a class="next" data-nav="quiz"><span class="lbl">Next</span>Knowledge Check →</a>
+        </div>
+      </section>
+
+      <!-- ===================== QUIZ ===================== -->
+      <section class="panel" id="panel-quiz">
+        <span class="eyebrow" style="--accent:var(--coral);--accent-soft:var(--coral-soft);"><span class="dot"></span>Before the Workshop</span>
+        <h1 class="page-title">Knowledge Check</h1>
+        <p class="page-sub">A quick check on the concepts covered in this pre-read. Multiple choice and fill-in-the-blank grade instantly; short answers are for your own reflection and aren't graded.</p>
+
+        <div id="quizContainer"></div>
+
+        <div class="quiz-summary">
+          <div>
+            <div class="qs-label">Score (multiple choice + fill-in-the-blank)</div>
+            <div class="qs-score" id="quizScore">0 / 0 answered</div>
+          </div>
+          <button class="btn btn-primary" id="quizCheckAll">Check my answers</button>
+        </div>
+
+        <div class="footnav">
+          <a data-nav="charter"><span class="lbl">Back</span>← Your Team Charter</a>
+          <a class="next" data-nav="journey"><span class="lbl">Restart</span>Back to The Journey →</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- storage helpers ---------------- */
+  var LS_PREFIX = "hpt_preread_";
+  function getData(key, fallback){
+    try{
+      var raw = localStorage.getItem(LS_PREFIX+key);
+      if(raw===null || raw===undefined) return fallback;
+      return JSON.parse(raw);
+    }catch(e){ return fallback; }
+  }
+  function setData(key, val){
+    try{ localStorage.setItem(LS_PREFIX+key, JSON.stringify(val)); }catch(e){}
+  }
+
+  /* ---------------- navigation ---------------- */
+  var sections = ["journey","h1","h2","h3","h4","h5","h6","charter","quiz"];
+  var habitAccent = {journey:'c6',h1:'c1',h2:'c2',h3:'c3',h4:'c4',h5:'c5',h6:'c6',charter:'coral',quiz:'coral'};
+
+  function markVisited(id){
+    var v = getData('visited', {});
+    v[id] = true;
+    setData('visited', v);
+    refreshNavState();
+  }
+
+  function refreshNavState(){
+    var v = getData('visited', {});
+    var current = getData('lastPanel','journey');
+    document.querySelectorAll('.navlink').forEach(function(btn){
+      var id = btn.getAttribute('data-nav');
+      btn.classList.toggle('active', id===current);
+      btn.classList.toggle('visited', !!v[id]);
+    });
+  }
+
+  function syncCharterInputs(){
+    document.querySelectorAll('.charter-input').forEach(function(el){
+      if(document.activeElement === el) return;
+      var key = el.getAttribute('data-key');
+      var saved = getData(key, '');
+      if(el.value !== saved) el.value = saved;
+    });
+  }
+
+  function showPanel(id, doScroll){
+    if(sections.indexOf(id)===-1) id = 'journey';
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+    var target = document.getElementById('panel-'+id);
+    if(target) target.classList.add('active');
+    setData('lastPanel', id);
+    markVisited(id);
+    refreshNavState();
+    closeSidebar();
+    syncCharterInputs();
+    if(id === 'h3') renderRaci();
+    if(id === 'h4') renderStyleTable();
+    if(id === 'charter'){ renderPosterRaci(); renderDiscTable(); }
+    if(doScroll!==false) window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
+    if(id === 'journey') renderWheel();
+  }
+
+  document.querySelectorAll('[data-nav]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      showPanel(el.getAttribute('data-nav'));
+    });
+  });
+
+  /* mobile sidebar */
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('overlay');
+  document.getElementById('burgerBtn').addEventListener('click', function(){
+    sidebar.classList.add('open'); overlay.classList.add('show');
+  });
+  overlay.addEventListener('click', closeSidebar);
+  function closeSidebar(){ sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+
+  /* ---------------- Journey wheel ---------------- */
+  var wheelBound = false;
+  function bindWheelOnce(){
+    if(wheelBound) return;
+    wheelBound = true;
+    document.querySelectorAll('#wheelOuter [data-nav]').forEach(function(el){
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        showPanel(el.getAttribute('data-nav'));
+      });
+    });
+  }
+  function renderWheel(){
+    var outer = document.getElementById('wheelOuter');
+    if(!outer) return;
+    bindWheelOnce();
+    var v = getData('visited', {});
+    outer.querySelectorAll('[data-wedge]').forEach(function(el){
+      var id = el.getAttribute('data-wedge');
+      el.classList.toggle('done', !!v[id]);
+    });
+  }
+
+  /* ---------------- generic text inputs (why, align) ---------------- */
+  document.querySelectorAll('.charter-input').forEach(function(el){
+    var key = el.getAttribute('data-key');
+    var saved = getData(key, '');
+    if(saved) el.value = saved;
+    el.addEventListener('input', function(){
+      setData(key, el.value);
+    });
+  });
+
+  /* ---------------- RACI table ---------------- */
+  var raciNamesDefault = ['Name','Name','Name','Name','Name'];
+  function loadRaci(){
+    return getData('raci', {
+      names: raciNamesDefault.slice(),
+      rows: [
+        {project:'', vals:['','','','','']},
+        {project:'', vals:['','','','','']},
+        {project:'', vals:['','','','','']}
+      ]
+    });
+  }
+  function saveRaci(data){
+    setData('raci', data);
+    if(document.getElementById('panel-charter').classList.contains('active')) renderPosterRaci();
+  }
+
+  function renderRaci(){
+    var data = loadRaci();
+    var theadNames = document.querySelectorAll('#raciTable .raci-name-th');
+    theadNames.forEach(function(th, i){
+      th.textContent = '';
+      var input = document.createElement('input');
+      input.value = data.names[i] || 'Name';
+      input.style.cssText = 'width:100%;border:none;background:transparent;font:inherit;font-weight:700;text-transform:uppercase;font-size:12.5px;color:inherit;';
+      input.addEventListener('input', function(){
+        var d = loadRaci(); d.names[i] = input.value; saveRaci(d);
+      });
+      th.appendChild(input);
+    });
+
+    var body = document.getElementById('raciBody');
+    body.innerHTML = '';
+    data.rows.forEach(function(row, ri){
+      var tr = document.createElement('tr');
+      var tdProj = document.createElement('td');
+      var projInput = document.createElement('input');
+      projInput.value = row.project || '';
+      projInput.placeholder = 'Project name…';
+      projInput.addEventListener('input', function(){
+        var d = loadRaci(); d.rows[ri].project = projInput.value; saveRaci(d);
+      });
+      tdProj.appendChild(projInput);
+      tr.appendChild(tdProj);
+
+      for(var c=0;c<5;c++){
+        (function(c){
+          var td = document.createElement('td');
+          var sel = document.createElement('select');
+          ['','R','A','C','I'].forEach(function(opt){
+            var o = document.createElement('option');
+            o.value = opt; o.textContent = opt || '—';
+            if((row.vals[c]||'') === opt) o.selected = true;
+            sel.appendChild(o);
+          });
+          sel.addEventListener('change', function(){
+            var d = loadRaci(); d.rows[ri].vals[c] = sel.value; saveRaci(d);
+          });
+          td.appendChild(sel);
+          tr.appendChild(td);
+        })(c);
+      }
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById('raciAddRow').addEventListener('click', function(){
+    var d = loadRaci();
+    d.rows.push({project:'', vals:['','','','','']});
+    saveRaci(d);
+    renderRaci();
+  });
+  renderRaci();
+
+  /* ---------------- Style / "how to work with me" table ---------------- */
+  function loadStyle(){
+    return getData('styleTable', [
+      {name:'', notes:''},
+      {name:'', notes:''},
+      {name:'', notes:''}
+    ]);
+  }
+  function saveStyle(d){ setData('styleTable', d); }
+  function renderStyleTable(){
+    var data = loadStyle();
+    var body = document.getElementById('styleBody');
+    body.innerHTML = '';
+    data.forEach(function(row, ri){
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td');
+      var nameInput = document.createElement('input');
+      nameInput.value = row.name; nameInput.placeholder='Name';
+      nameInput.addEventListener('input', function(){ var d=loadStyle(); d[ri].name=nameInput.value; saveStyle(d); });
+      td1.appendChild(nameInput);
+
+      var td2 = document.createElement('td');
+      var ta = document.createElement('textarea');
+      ta.value = row.notes; ta.rows=2; ta.placeholder='3–5 expectations for how others should work with me…';
+      ta.addEventListener('input', function(){ var d=loadStyle(); d[ri].notes=ta.value; saveStyle(d); });
+      td2.appendChild(ta);
+
+      tr.appendChild(td1); tr.appendChild(td2);
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById('styleAddRow').addEventListener('click', function(){
+    var d = loadStyle(); d.push({name:'',notes:''}); saveStyle(d); renderStyleTable();
+  });
+  renderStyleTable();
+
+  /* ---------------- DISC detail panel ---------------- */
+  var discData = {
+    d:{name:'D · Dominance ("Fiery Red")', color:'#D8433B', ask:'Ask "What?" — what are we going to do?', effective:'Getting immediate results, taking action, accepting challenges.', motivated:'Challenges, power and authority, receiving direct answers.', fears:'Loss of control in their environment, being taken advantage of.', ineffective:'Viewed as dictatorial or demanding; lack of concern for others.'},
+    i:{name:'I · Influence ("Sunshine Yellow")', color:'#F0A93A', ask:'Ask "Who?" — who is going to be involved?', effective:'Involving people, making a favorable impression, creating energy.', motivated:'Social recognition, group activities, relationships, ideation.', fears:'Social rejection, isolation, loss of influence, others\' disapproval.', ineffective:'Viewed as impulsive, disorganized, lacking follow-through.'},
+    s:{name:'S · Steadiness ("Earth Green")', color:'#4E9A5A', ask:'Ask "How?" — how will changes affect others?', effective:'Being calm, patient, loyal, considering others, listening deeply.', motivated:'Infrequent changes, stability, sincere appreciation, calmness.', fears:'Loss of stability, the unknown, change, unpredictability, unfairness.', ineffective:'Viewed as stubborn, overly concerned about others, puts own needs last.'},
+    c:{name:'C · Conscientiousness ("Cool Blue")', color:'#2E6FE0', ask:'Ask "Why?" — why are things that way?', effective:'Attention to detail and standards, analytical thinking, risk ID.', motivated:'Clearly-defined expectations, value placed on quality and accuracy.', fears:'Criticism of their work, sloppy work, missing foreseeable risks.', ineffective:'Viewed as overly critical of self or others; analysis paralysis.'}
+  };
+  document.querySelectorAll('.disc-cell').forEach(function(cell){
+    cell.addEventListener('click', function(){
+      var key = cell.getAttribute('data-disc');
+      var d = discData[key];
+      var panel = document.getElementById('discDetail');
+      panel.innerHTML =
+        '<div class="dd-head"><div class="dd-badge" style="background:'+d.color+';">'+key.toUpperCase()+'</div>'+
+        '<div><div style="font-family:Sora;font-weight:700;font-size:17px;">'+d.name+'</div>'+
+        '<div style="font-size:13px;color:var(--ink-faint);">'+d.ask+'</div></div></div>'+
+        '<div class="dd-grid">'+
+        '<div class="dd-item"><div class="lbl">Effective at</div><p>'+d.effective+'</p></div>'+
+        '<div class="dd-item"><div class="lbl">Motivated by</div><p>'+d.motivated+'</p></div>'+
+        '<div class="dd-item"><div class="lbl">Fears</div><p>'+d.fears+'</p></div>'+
+        '<div class="dd-item"><div class="lbl">Can be perceived as</div><p>'+d.ineffective+'</p></div>'+
+        '</div>';
+      panel.classList.add('show');
+      panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+  });
+
+  /* ---------------- Charter: compact poster RACI (mirrors the Habit 3 RACI data) ---------------- */
+  function renderPosterRaci(){
+    var data = loadRaci();
+    var head = document.getElementById('posterRaciHead');
+    if(!head) return;
+    head.innerHTML = '<th style="width:34%;">Project</th>';
+    data.names.forEach(function(n, i){
+      var th = document.createElement('th');
+      th.textContent = n || 'Name';
+      head.appendChild(th);
+    });
+    var body = document.getElementById('posterRaciBody');
+    body.innerHTML = '';
+    data.rows.forEach(function(row, ri){
+      var tr = document.createElement('tr');
+      var tdProj = document.createElement('td');
+      var pin = document.createElement('input');
+      pin.value = row.project || '';
+      pin.placeholder = 'Project…';
+      pin.addEventListener('input', function(){ var d = loadRaci(); d.rows[ri].project = pin.value; saveRaci(d); });
+      tdProj.appendChild(pin);
+      tr.appendChild(tdProj);
+      for(var c=0;c<5;c++){
+        (function(c){
+          var td = document.createElement('td');
+          var sel = document.createElement('select');
+          ['','R','A','C','I'].forEach(function(opt){
+            var o = document.createElement('option');
+            o.value = opt; o.textContent = opt || '—';
+            if((row.vals[c]||'') === opt) o.selected = true;
+            sel.appendChild(o);
+          });
+          sel.addEventListener('change', function(){ var d = loadRaci(); d.rows[ri].vals[c] = sel.value; saveRaci(d); });
+          td.appendChild(sel);
+          tr.appendChild(td);
+        })(c);
+      }
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById('posterRaciAddRow').addEventListener('click', function(){
+    var d = loadRaci();
+    d.rows.push({project:'', vals:['','','','','']});
+    saveRaci(d);
+    renderPosterRaci();
+  });
+
+  /* ---------------- Charter: DISC Profile I/II table ---------------- */
+  function loadDisc(){
+    return getData('discTable', [
+      {name:'', p1:'', p2:''},
+      {name:'', p1:'', p2:''},
+      {name:'', p1:'', p2:''}
+    ]);
+  }
+  function saveDisc(d){ setData('discTable', d); }
+  function renderDiscTable(){
+    var data = loadDisc();
+    var body = document.getElementById('discBody');
+    if(!body) return;
+    body.innerHTML = '';
+    data.forEach(function(row, ri){
+      var tr = document.createElement('tr');
+
+      var td1 = document.createElement('td');
+      var nameInput = document.createElement('input');
+      nameInput.value = row.name; nameInput.placeholder = 'Name';
+      nameInput.addEventListener('input', function(){ var d = loadDisc(); d[ri].name = nameInput.value; saveDisc(d); });
+      td1.appendChild(nameInput);
+
+      var td2 = document.createElement('td');
+      var p1Input = document.createElement('input');
+      p1Input.value = row.p1; p1Input.placeholder = 'e.g. DC';
+      p1Input.addEventListener('input', function(){ var d = loadDisc(); d[ri].p1 = p1Input.value; saveDisc(d); });
+      td2.appendChild(p1Input);
+
+      var td3 = document.createElement('td');
+      var p2Input = document.createElement('input');
+      p2Input.value = row.p2; p2Input.placeholder = 'e.g. Cd';
+      p2Input.addEventListener('input', function(){ var d = loadDisc(); d[ri].p2 = p2Input.value; saveDisc(d); });
+      td3.appendChild(p2Input);
+
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById('discAddRow').addEventListener('click', function(){
+    var d = loadDisc(); d.push({name:'',p1:'',p2:''}); saveDisc(d); renderDiscTable();
+  });
+
+  /* ---------------- Quiz ---------------- */
+  var quiz = [
+    {type:'mc', id:'q1', q:'What sits at the center of the Six Habits wheel — the question the whole model circles back to?', options:['Set Clear Roles','Review, Reflect and Recommit','Define Your "Why"','Clarify Context'], answer:1},
+    {type:'mc', id:'q2', q:'In RACI, what does "A" stand for?', options:['Assigned','Approved','Accountable','Active'], answer:2},
+    {type:'mc', id:'q3', q:'According to the Learning Zone model, real habit-building happens in the:', options:['Comfort Zone','Learning Zone','Panic Zone','Death Zone'], answer:1},
+    {type:'mc', id:'q4', q:'On the Comparative Value Contribution scale, which form of collaboration creates the highest value?', options:['Coordination','Co-operation','Intentional Collaboration','Reactive Collaboration'], answer:2},
+    {type:'mc', id:'q5', q:'Which core question does the DISC "D" (Dominance) style ask?', options:['Who?','Why?','How?','What?'], answer:3},
+    {type:'mc', id:'q6', q:'Which DISC style is described as task-driven and reacts to the world (introverted)?', options:['I — Influence ("Sunshine Yellow")','C — Conscientiousness ("Cool Blue")','S — Steadiness ("Earth Green")','D — Dominance ("Fiery Red")'], answer:1},
+    {type:'fill', id:'q7', q:'Fill in the blank: "HPT is not a class or a one-time program. It is an ongoing _____ where team members build habits."', accept:['journey']},
+    {type:'fill', id:'q8', q:'Fill in the blank: RACI stands for Responsible, Accountable, _____, and Informed.', accept:['consulted']},
+    {type:'fill', id:'q9', q:'Fill in the blank: In "Set Clear Roles," the three rings of the Radar Screen are Individual Work, Subgroup Work, and _____ Work.', accept:['team']},
+    {type:'short', id:'q10', q:'In your own words: why is "Intentional Collaboration" higher value than "Coordination"?'},
+    {type:'short', id:'q11', q:'Which DISC style do you most recognize in yourself, and why?'},
+    {type:'short', id:'q12', q:"What's one behavior your team could commit to as part of Aligning Ways of Working?"}
+  ];
+
+  var quizContainer = document.getElementById('quizContainer');
+  quiz.forEach(function(item, idx){
+    var wrap = document.createElement('div');
+    wrap.className = 'quiz-q';
+    var num = idx+1;
+    var html = '<div class="qn">Question '+num+' of '+quiz.length+' · '+(item.type==='mc'?'Multiple Choice':item.type==='fill'?'Fill in the Blank':'Short Answer — reflection only')+'</div>';
+    html += '<h4>'+item.q+'</h4>';
+    if(item.type==='mc'){
+      html += '<div class="quiz-opts" data-qid="'+item.id+'">';
+      item.options.forEach(function(opt, oi){
+        html += '<label class="quiz-opt" data-oi="'+oi+'"><input type="radio" name="'+item.id+'" value="'+oi+'"> '+opt+'</label>';
+      });
+      html += '</div><div class="quiz-feedback" id="fb-'+item.id+'"></div>';
+    } else if(item.type==='fill'){
+      html += '<div class="quiz-fill"><input type="text" id="input-'+item.id+'" placeholder="Type your answer…"></div>';
+      html += '<div class="quiz-feedback" id="fb-'+item.id+'"></div>';
+    } else {
+      html += '<div class="quiz-short"><textarea id="input-'+item.id+'" placeholder="Jot your thoughts — saved automatically, not graded."></textarea></div>';
+    }
+    wrap.innerHTML = html;
+    quizContainer.appendChild(wrap);
+  });
+
+  // restore saved quiz answers
+  quiz.forEach(function(item){
+    var saved = getData('quiz-'+item.id, null);
+    if(item.type==='mc' && saved!==null){
+      var radio = quizContainer.querySelector('input[name="'+item.id+'"][value="'+saved+'"]');
+      if(radio) radio.checked = true;
+    } else if((item.type==='fill'||item.type==='short') && saved){
+      var inp = document.getElementById('input-'+item.id);
+      if(inp) inp.value = saved;
+    }
+  });
+
+  // persist on change
+  quiz.forEach(function(item){
+    if(item.type==='mc'){
+      quizContainer.querySelectorAll('input[name="'+item.id+'"]').forEach(function(r){
+        r.addEventListener('change', function(){ setData('quiz-'+item.id, parseInt(r.value,10)); });
+      });
+    } else {
+      var inp = document.getElementById('input-'+item.id);
+      if(inp) inp.addEventListener('input', function(){ setData('quiz-'+item.id, inp.value); });
+    }
+  });
+
+  function normalize(s){ return (s||'').toLowerCase().trim().replace(/[.!?]/g,''); }
+
+  function checkAll(){
+    var scored = 0, correct = 0;
+    quiz.forEach(function(item){
+      if(item.type==='mc'){
+        scored++;
+        var chosen = quizContainer.querySelector('input[name="'+item.id+'"]:checked');
+        var opts = quizContainer.querySelectorAll('.quiz-opts[data-qid="'+item.id+'"] .quiz-opt');
+        opts.forEach(function(o){ o.classList.remove('correct','incorrect'); });
+        var fb = document.getElementById('fb-'+item.id);
+        if(!chosen){
+          fb.textContent = 'No answer selected.';
+          fb.className = 'quiz-feedback show no';
+          return;
+        }
+        var chosenIdx = parseInt(chosen.value,10);
+        opts[item.answer].classList.add('correct');
+        if(chosenIdx === item.answer){
+          correct++;
+          fb.textContent = 'Correct!';
+          fb.className = 'quiz-feedback show ok';
+        } else {
+          opts[chosenIdx].classList.add('incorrect');
+          fb.textContent = 'Not quite — correct answer highlighted above.';
+          fb.className = 'quiz-feedback show no';
+        }
+      } else if(item.type==='fill'){
+        scored++;
+        var inp = document.getElementById('input-'+item.id);
+        var fb2 = document.getElementById('fb-'+item.id);
+        var val = normalize(inp.value);
+        var ok = item.accept.some(function(a){ return normalize(a)===val; });
+        if(!inp.value.trim()){
+          fb2.textContent = 'No answer entered.';
+          fb2.className = 'quiz-feedback show no';
+        } else if(ok){
+          correct++;
+          fb2.textContent = 'Correct!';
+          fb2.className = 'quiz-feedback show ok';
+        } else {
+          fb2.textContent = 'Not quite — expected: "'+item.accept[0]+'"';
+          fb2.className = 'quiz-feedback show no';
+        }
+      }
+    });
+    document.getElementById('quizScore').textContent = correct+' / '+scored+' correct';
+  }
+  document.getElementById('quizCheckAll').addEventListener('click', checkAll);
+
+  /* ---------------- reset ---------------- */
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(confirm('Clear everything you\'ve filled in on this device? This can\'t be undone.')){
+      Object.keys(localStorage).forEach(function(k){
+        if(k.indexOf(LS_PREFIX)===0) localStorage.removeItem(k);
+      });
+      location.reload();
+    }
+  });
+
+  /* ---------------- login gate ----------------
+     Client-side only: this hides the content behind a simple sign-in
+     so casual visitors don't stumble into it. It is NOT secure storage —
+     the credentials are visible to anyone who views this file's source,
+     so don't rely on it to protect sensitive information. */
+  var VALID_USER = "Zalop@ayTech";
+  var VALID_PASS = "TechHighPerform@nce";
+  var AUTH_KEY = LS_PREFIX + "authed";
+
+  var loginScreen = document.getElementById('loginScreen');
+  var appRoot = document.getElementById('appRoot');
+  var loginForm = document.getElementById('loginForm');
+  var loginError = document.getElementById('loginError');
+
+  function unlockApp(){
+    loginScreen.style.display = 'none';
+    appRoot.classList.remove('locked');
+    initApp();
+  }
+
+  if(localStorage.getItem(AUTH_KEY) === '1'){
+    unlockApp();
+  }
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var u = document.getElementById('loginUser').value;
+    var p = document.getElementById('loginPass').value;
+    if(u === VALID_USER && p === VALID_PASS){
+      try{ localStorage.setItem(AUTH_KEY, '1'); }catch(err){}
+      loginError.classList.remove('show');
+      unlockApp();
+    } else {
+      loginError.classList.add('show');
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    try{ localStorage.removeItem(AUTH_KEY); }catch(err){}
+    location.reload();
+  });
+
+  /* ---------------- init ---------------- */
+  var appInitialized = false;
+  function initApp(){
+    if(appInitialized) return;
+    appInitialized = true;
+    var last = getData('lastPanel','journey');
+    showPanel(last, false);
+  }
+})();
+</script>
+</body>
+</html>
